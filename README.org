@@ -1,0 +1,51 @@
+#+STARTUP: showall
+
+* build
+   - [ ] local build
+   - [ ] remote build
+   - [ ] profiles
+   - [ ] apt sources.list generator
+   - [ ] clean
+   - [ ] shell
+   - [ ] remote username for $WORKDIR
+   - [ ] rebuild
+   - [ ] log
+   - [ ] buildreq
+   - [ ] nohup remote build
+   - [ ] <low> with-stuff multiple branches
+   - [ ] <low> init-only
+   - [ ] <low> select package option
+
+* log
+  - [ ] last log
+  - [ ] selection interface
+    
+* repo
+  - [ ] init
+  - [ ] push
+  - [ ] view: http://git.altlinux.org
+  - [ ] clone
+  - [ ] search
+  - [ ] <low> update: gear-remotes-uscan, etc.
+
+* task
+  - [ ] list: my, by user, building
+  - [ ] new: <bin repo>
+  - [ ] add
+  - [ ] update
+  - [ ] show
+  - [ ] run
+  - [ ] abort
+  - [ ] approve
+  - [ ] view: http://webery.altlinux.org/task
+  - [ ] selection interface
+
+* acl
+  - [ ] check
+  - [ ] show
+
+* kernel
+  - ...
+  
+* image
+  - ...
