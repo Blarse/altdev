@@ -1,0 +1,5 @@
+branch=Sisyphus
+target=ppc64le
+remote=ppc
+verbose=-v
+repo_url=rsync://alt/space/ALT/

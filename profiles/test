@@ -1,0 +1,5 @@
+branch=Sisyphus
+target=x86_64
+remote=shell
+verbose=-v
+repo_url=file:/ALT/
