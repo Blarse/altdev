@@ -1,15 +1,16 @@
 #+STARTUP: showall
 
 * build
-   - [ ] local build
-   - [ ] remote build
-   - [ ] profiles
-   - [ ] apt sources.list generator
-   - [ ] clean
-   - [ ] shell
+   - [X] local build
+   - [X] remote build
+   - [X] profiles
+   - [X] apt sources.list generator
+   - [X] clean
+   - [X] shell
+   - [X] install
+   - [X] rebuild
+   - [X] log
    - [ ] remote username for $WORKDIR
-   - [ ] rebuild
-   - [ ] log
    - [ ] buildreq
    - [ ] nohup remote build
    - [ ] <low> with-stuff multiple branches

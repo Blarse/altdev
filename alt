@@ -1,0 +1,49 @@
+#!/bin/bash -uef
+
+. altdev-sh-functions.sh
+. altdev-config.sh
+
+# Create directory structure
+mkdir -p $ALTDEVDIR $ALTDIR $WORKDIR
+mkdir -p $HASHERDIR $REPODIR $GEARS
+mkdir -p $PKGS
+
+case "$1" in
+    b|build)
+		shift
+		$ALTDEVDIR/altdev-build.sh "$@"
+		;;
+    l|log)
+		pkg="$(get_package)"
+		[ -n "$pkg" ] || fatal "Package not found"
+		log="$PKGS/$pkg/build.log"
+		if [ -r "$log" ]; then
+			bat "$log"
+		else
+			fatal "Can't find build log for '$pkg'"
+		fi
+		;;
+    r|repo)
+		fatal "*Unimplemented*"
+		;;
+    t|task)
+		fatal "*Unimplemented*"
+		;;
+    k|kernel)
+		fatal "*Unimplemented*"
+		;;
+    i|image)
+		fatal "*Unimplemented*"
+		;;
+    e|env)
+		fatal "*Unimplemented*"
+		;;
+	h|help|-h|--help)
+		echo "h"
+		;;
+    *)
+		fatal "Unknown subcommand"
+	;;
+esac
+
+exit 0
