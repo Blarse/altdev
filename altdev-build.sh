@@ -107,16 +107,27 @@ build(){
 		 $CUR_PKG/pkg.tar 2>&1 | tee $CUR_PKG/gear.log | tee -a $CUR_PKG/build.log
 
     if [ -z "$remote" ]; then
-		hsh --with-stuff \
-			--apt-config=$CUR_PKG/apt.conf \
-			--lazy-cleanup \
-			--no-sisyphus-check \
-			--repo=$CUR_PKG/out \
-			--target=$target \
-			--wait-lock \
-			$verbose \
-			$HASHERDIR \
-			$CUR_PKG/pkg.tar 2>&1 | tee $CUR_PKG/hsh.log | tee -a $CUR_PKG/build.log
+		if [ "$1" = "0" ]; then
+			hsh --with-stuff \
+				--apt-config=$CUR_PKG/apt.conf \
+				--lazy-cleanup \
+				--no-sisyphus-check \
+				--repo=$CUR_PKG/out \
+				--target=$target \
+				--wait-lock \
+				$verbose \
+				$HASHERDIR \
+				$CUR_PKG/pkg.tar 2>&1 | tee $CUR_PKG/hsh.log | tee -a $CUR_PKG/build.log
+		else
+			hsh-rebuild --with-stuff \
+						--no-sisyphus-check \
+						--repo=$CUR_PKG/out \
+						--target=$target \
+						--wait-lock \
+						$verbose \
+						$HASHERDIR \
+						$CUR_PKG/pkg.tar 2>&1 | tee $CUR_PKG/hsh.log | tee -a $CUR_PKG/build.log
+		fi
     else
 		ssh $remote rm -rf $CUR_PKG
 		ssh $remote mkdir -pv $CUR_PKG
@@ -129,28 +140,28 @@ build(){
 		if [ "$1" = "0" ]; then
 			#build
 			ssh $remote <<-EOF 2>&1 | tee $CUR_PKG/hsh.log | tee -a $CUR_PKG/build.log
-			nohup hsh --with-stuff \
-				   	  --apt-config=$CUR_PKG/apt.conf \
-	    	  	  	  --lazy-cleanup \
-			  	  	  --no-sisyphus-check \
-				  	  --repo=$CUR_PKG/out \
-				  	  --target=$target \
-				  	  --wait-lock \
-				  	  $verbose \
-				  	  $HASHERDIR \
-				  	  $CUR_PKG/pkg.tar
+			hsh --with-stuff \
+				--apt-config=$CUR_PKG/apt.conf \
+				--lazy-cleanup \
+				--no-sisyphus-check \
+				--repo=$CUR_PKG/out \
+				--target=$target \
+				--wait-lock \
+				$verbose \
+				$HASHERDIR \
+				$CUR_PKG/pkg.tar
 			EOF
 		else
 			#rebuild
 			ssh $remote <<-EOF 2>&1 | tee $CUR_PKG/hsh.log | tee -a $CUR_PKG/build.log
-			nohup hsh-rebuild --with-stuff \
-			  	  	  		  --no-sisyphus-check \
-				  	  		  --repo=$CUR_PKG/out \
-				  	  		  --target=$target \
-				  	  		  --wait-lock \
-				  	  		  $verbose \
-				  	  		  $HASHERDIR \
-				  	  		  $CUR_PKG/pkg.tar
+			hsh-rebuild --with-stuff \
+						--no-sisyphus-check \
+						--repo=$CUR_PKG/out \
+						--target=$target \
+						--wait-lock \
+						$verbose \
+						$HASHERDIR \
+						$CUR_PKG/pkg.tar
 			EOF
 		fi
 		
