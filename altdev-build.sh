@@ -197,11 +197,30 @@ load_var() {
 
 [ -f "$PROFILES/$profile" ] || fatal "Profile \"$profile\" doesn't exist"
 
-[ -z "$target" ] && target="$(load_var target)"
 [ -z "$remote" ] && remote="$(load_var remote)"
+[ -z "$verbose" ] && verbose="$(load_var verbose)"
+
+case "$subcmd" in
+    shell)
+		[ -n "$remote" ] || TERM=xterm hsh-shell $HASHERDIR
+		[ -n "$remote" ] && TERM=xterm ssh -t $remote hsh-shell $HASHERDIR
+		exit 0
+		;;
+    clean)
+		[ -n "$remote" ] || hsh --cleanup-only $verbose $HASHERDIR
+		[ -n "$remote" ] && ssh $remote hsh --cleanup-only $verbose $HASHERDIR
+		exit 0
+		;;
+	install)
+		[ -n "$remote" ] || hsh-install $verbose $HASHERDIR $inst_pkgs
+		[ -n "$remote" ] && ssh $remote hsh-install $verbose $HASHERDIR $inst_pkgs
+		exit 0
+		;;
+esac
+
+[ -z "$target" ] && target="$(load_var target)"
 [ -z "$branch" ] && branch="$(load_var branch)"
 [ -z "$repo_url" ] && repo_url="$(load_var repo_url)"
-[ -z "$verbose" ] && verbose="$(load_var verbose)"
 
 package=$(get_package)
 [ -n "$package" ] || fatal "no package to build"
@@ -214,22 +233,6 @@ echo "Target:" $target
 echo "Remote:" $remote
 echo "apt-repo:" "rpm $repo_url $branch/$target classic"
 echo "Verbose:" "$verbose"
-
-
-case "$subcmd" in
-    shell)
-		[ -n "$remote" ] || hsh-shell $HASHERDIR
-		[ -n "$remote" ] && TERM=xterm ssh -t $remote hsh-shell $HASHERDIR
-		;;
-    clean)
-		[ -n "$remote" ] || hsh --cleanup-only $verbose $HASHERDIR
-		[ -n "$remote" ] && ssh $remote hsh --cleanup-only $verbose $HASHERDIR
-		;;
-	install)
-		[ -n "$remote" ] || hsh-install $verbose $HASHERDIR $inst_pkgs
-		[ -n "$remote" ] && ssh $remote hsh-install $verbose $HASHERDIR $inst_pkgs
-		;;
-esac
 
 case "$subcmd" in
 	build) build 0
