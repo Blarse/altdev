@@ -72,7 +72,7 @@ while [[ "$#" > 0 ]] ; do
 			;;
 		*)
 			[ -f "$PROFILES/$1" ] && profile="$1" || \
-					echo "Warning: unknown argument \"$1\"" 1>&2
+					fatal "fatal: unknown argument \"$1\"" 1>&2
 			;;
     esac
     shift
